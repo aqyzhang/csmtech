@@ -2,7 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-type SquareProps = {
+/**
+ * @interface SquareProps Props for a single square/button on the board.
+ *
+ * @property {string} value
+ *      Value of the square - either 'X' or 'O'
+ * @property {() => void} onClick
+ *      Defers back to the handleClick function in the Game class, which decides if the game is over using
+ *      calculateWinner and also updates the state of the board (if X or O is filled, adding the state 
+ *      to history).
+ */
+
+interface SquareProps {
   value: String;
   onClick: () => void;
 }
@@ -35,8 +46,19 @@ function calculateWinner(squares: string[]) {
   return null;
 }
 
+/**
+ * @interface BoardProps Props for the whole 3x3 board.
+ *
+ * @property {string[]} squares
+ *      An array of null's or X/O to represent the 3x3's board progress.
+ * @property {(i: number) => void} onClick
+ *      Defers back to the handleClick function in the Game class, which decides if the game is over using
+ *      calculateWinner and also updates the state of the board (if X or O is filled, adding the state 
+ *      to history). Takes in i which is the position/index of the square the user clicked.
+ */
 
-type BoardProps = {
+
+interface BoardProps {
   squares: string[];
   onClick: (i: number) => void;
 }
@@ -76,22 +98,41 @@ class Board extends React.Component<BoardProps> {
   }
 }
 
-type GameProps = {
-}
+/**
+ * @interface GameState Tracks essential information about the game progress and player turns.
+ *
+ * @property {BoardState[]} history
+ *      An array of board states, which is just how the board in filled up with null and X/O's at a certain
+ *      time step. They are arranged chronologically, and can be indexed by their step number.
+ * @property {number} stepNumber
+ *      Starting at 0 (game start), tracks what step the game is on. Makes it easy to recall previous 
+ *      steps by using this number to access the squares state in history.
+ * @property {(i: number) => void} onClick
+ *      Calls handleClick function, which decides if the game is over using calculateWinner and also updates
+ *      the state of the board (if X or O is filled, adding the state to history). Takes in i which is
+ *      the position/index of the square the user clicked.
+ */
 
 
-type GameState = {
+interface GameState {
   history: BoardState[];
   stepNumber: number;
   xIsNext: boolean;
 }
 
-type BoardState = {
+/**
+ * @interface BoardState Represents the state of the board and how it has been filled up by players.
+ *
+ * @property {string[]} squares
+ *      An array of null's or X/O to represent the 3x3's board progress.
+ */
+
+interface BoardState {
   squares: string[];
 }
 
-class Game extends React.Component<GameProps, GameState> {
-  constructor(props: GameProps) {
+class Game extends React.Component<{}, GameState> {
+  constructor(props: {}) {
       super(props);
       this.state = {
           history: [{
