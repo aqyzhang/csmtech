@@ -1,7 +1,7 @@
 ### `Responsiveness Demo`
 
-![Resizing Window Demo](csmtech/resizing.gif)
+![Resizing Window Demo](resizing.gif)
 
 ### `Search Demo`
 
-![Search Topics Demo](csmtech/search.gif)
+![Search Topics Demo](search.gif)
